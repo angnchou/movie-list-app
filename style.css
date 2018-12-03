@@ -1,0 +1,22 @@
+.box {
+  border: 1px solid black;
+}
+
+h1 {
+  background-color: #cacaca;
+  margin: 0px;
+  padding: 8px;
+}
+
+li {
+  list-style-type: none;
+  font-size: 20px;
+  border: 1px solid black;
+  padding: 8px;
+  border-bottom-width: 0px;
+  margin: 0px 8px;
+}
+
+li:last-child {
+  border-bottom-width: 1px;
+}
