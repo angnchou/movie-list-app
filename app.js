@@ -1,3 +1,6 @@
+// import React from "../node_modules/react/dist/react.js";
+import List from "./List.js";
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -5,9 +8,11 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="MovieListTitle">MovieList Title</div>
-        {JSON.stringify(this.props.movies)}
+      <div className="box">
+        <h1>{"MovieList"}</h1>
+        <div>
+          <List list={this.props.movies} />
+        </div>
       </div>
     );
   }
