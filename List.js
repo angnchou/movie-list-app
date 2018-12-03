@@ -22,13 +22,5 @@ const List = props => {
   );
 };
 
-// const groceryListItem = props.items.map(items => <GroceryListItem items={items} />);
-
-// return (
-//   <ul>
-//     {groceryListItem}
-//   </ul>
-// );
-// );
 
 export default List;
