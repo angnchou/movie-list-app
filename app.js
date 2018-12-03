@@ -9,7 +9,7 @@ class App extends React.Component {
       searchValue: "",
       searchQuery: "", //filter with the value you search with
       movieItems: [],
-      addInputValue: ""
+      addInputValue: "" //can be local state
     };
   }
 
