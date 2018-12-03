@@ -7,7 +7,9 @@ class App extends React.Component {
     super(props);
     this.state = {
       searchValue: "",
-      movieItems: this.props.movies //display full list
+      searchQuery: "", //filter with the value you search with
+      movieItems: [],
+      addInputValue: ""
     };
   }
 
@@ -17,25 +19,54 @@ class App extends React.Component {
 
   handleSearch(event) {
     event.preventDefault();
-    const query = this.state.searchValue.toLowerCase();
-    const searchItems = this.props.movies.filter(movie => {
+    this.setState({ searchQuery: this.state.searchValue });
+  }
+
+  handleAdd(event) {
+    event.preventDefault();
+    const toAdd = { title: this.state.addInputValue };
+    this.setState({
+      movieItems: [toAdd, ...this.state.movieItems],
+      addInputValue: ""
+    });
+  }
+
+  handleAddInput(event) {
+    this.setState({ addInputValue: event.target.value });
+  }
+
+  searchItems() {
+    const query = this.state.searchQuery.toLowerCase();
+    return this.state.movieItems.filter(movie => {
       //filter original full list
       return movie.title.toLowerCase().includes(query);
     });
-    this.setState({ movieItems: searchItems });
   }
 
   render() {
     return (
       <div className="box">
         <h1>{"MovieList"}</h1>
-        <Search
-          searchValue={this.state.searchValue}
-          handleSearch={this.handleSearch.bind(this)}
-          handleInput={this.handleInput.bind(this)}
-        />
         <div>
-          <List list={this.state.movieItems} />
+          <form onSubmit={this.handleAdd.bind(this)}>
+            <input
+              type="text"
+              value={this.state.addInputValue}
+              onChange={this.handleAddInput.bind(this)}
+            />
+            <input type="submit" value="Add" />
+          </form>
+        </div>
+        <br />
+        <div>
+          <Search
+            searchValue={this.state.searchValue}
+            handleSearch={this.handleSearch.bind(this)}
+            handleInput={this.handleInput.bind(this)}
+          />
+        </div>
+        <div>
+          <List list={this.searchItems()} query={this.state.searchQuery} />
         </div>
       </div>
     );

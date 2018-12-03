@@ -3,6 +3,9 @@
 
 // {list: {movies: Array(5)}
 const List = props => {
+  if (!props.query && props.list.length === 0) {
+    return <p>{"add a movie!"}</p>;
+  }
   if (props.list.length === 0) {
     return <p>{"no movie by that name found"}</p>;
   }
