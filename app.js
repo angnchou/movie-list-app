@@ -1,6 +1,7 @@
 // import React from "../node_modules/react/dist/react.js";
 import List from "./List.js";
 import Search from "./search.js";
+import Add from "./add.js";
 
 class App extends React.Component {
   constructor(props) {
@@ -9,8 +10,11 @@ class App extends React.Component {
       searchValue: "",
       searchQuery: "", //filter with the value you search with
       movieItems: [],
-      addInputValue: "" //can be local state
+      addInputValue: "", //can be local state
+      watchedList: false
     };
+
+    this.watchedList = this.watchedList.bind(this);
   }
 
   handleInput(event) {
@@ -19,7 +23,7 @@ class App extends React.Component {
 
   handleSearch(event) {
     event.preventDefault();
-    this.setState({ searchQuery: this.state.searchValue });
+    this.setState({ searchQuery: this.state.searchValue, searchValue: "" });
   }
 
   handleAdd(event) {
@@ -43,19 +47,22 @@ class App extends React.Component {
     });
   }
 
+  watchedList() {
+    this.setState(state => {
+      watchedList: true;
+    });
+  }
+
   render() {
     return (
       <div className="box">
-        <h1>{"MovieList"}</h1>
+        <h1>{"MovieList!"}</h1>
         <div>
-          <form onSubmit={this.handleAdd.bind(this)}>
-            <input
-              type="text"
-              value={this.state.addInputValue}
-              onChange={this.handleAddInput.bind(this)}
-            />
-            <input type="submit" value="Add" />
-          </form>
+          <Add
+            handleAdd={this.handleAdd.bind(this)}
+            addInputValue={this.state.addInputValue}
+            handleAddInput={this.handleAddInput.bind(this)}
+          />
         </div>
         <br />
         <div>
@@ -66,7 +73,11 @@ class App extends React.Component {
           />
         </div>
         <div>
-          <List list={this.searchItems()} query={this.state.searchQuery} />
+          <List
+            list={this.searchItems()}
+            query={this.state.searchQuery}
+            watchedlist={this.watchedList}
+          />
         </div>
       </div>
     );
@@ -74,3 +85,4 @@ class App extends React.Component {
 }
 
 export default App;
+//render elements that match search query

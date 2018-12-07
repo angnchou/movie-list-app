@@ -15,6 +15,7 @@ const List = props => {
         {props.list.map((movieObj, index) => (
           <li className="list" key={index}>
             {movieObj.title}
+            <button onClick={props.watchedList}>{"Watched"}</button>
           </li>
         ))}
       </div>
@@ -23,3 +24,5 @@ const List = props => {
 };
 
 export default List;
+//add "Watched" status toggle
+//have a separate button that shows "watched" and "to watch" buttons
