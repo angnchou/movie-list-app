@@ -18,7 +18,6 @@ const Movielist = props => {
           movieItem={movieObj}
           key={index}
           toggleWatch={props.toggleWatch}
-          watchColor={props.watchColor}
         />
       ))}
     </ul>
