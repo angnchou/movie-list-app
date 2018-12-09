@@ -10,11 +10,8 @@ class App extends React.Component {
       searchValue: "",
       searchQuery: "", //filter with the value you search with
       movieItems: [],
-      addInputValue: "", //can be local state
-      watchedList: false
+      addInputValue: "" //can be local state
     };
-
-    this.watchedList = this.watchedList.bind(this);
   }
 
   handleInput(event) {
@@ -28,7 +25,7 @@ class App extends React.Component {
 
   handleAdd(event) {
     event.preventDefault();
-    const toAdd = { title: this.state.addInputValue };
+    const toAdd = { title: this.state.addInputValue, watchStatus: false };
     this.setState({
       movieItems: [toAdd, ...this.state.movieItems],
       addInputValue: ""
@@ -47,16 +44,18 @@ class App extends React.Component {
     });
   }
 
-  watchedList() {
-    this.setState(state => {
-      watchedList: true;
-    });
-  }
+  //toggle watch status
+  //button on each title to toggle status
+  //on click the status of the title is set to true and added to watched list
+  //a watchedList in state so "watched" button can render only these titles
+  //on click the page only renders these titles
 
   render() {
     return (
       <div className="box">
         <h1>{"MovieList!"}</h1>
+        <button>{"Watched"}</button>
+        <button>{"To watch"}</button>
         <div>
           <Add
             handleAdd={this.handleAdd.bind(this)}
@@ -73,11 +72,7 @@ class App extends React.Component {
           />
         </div>
         <div>
-          <List
-            list={this.searchItems()}
-            query={this.state.searchQuery}
-            watchedlist={this.watchedList}
-          />
+          <List list={this.searchItems()} query={this.state.searchQuery} />
         </div>
       </div>
     );

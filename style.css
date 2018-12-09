@@ -20,3 +20,7 @@ li {
 li:last-child {
   border-bottom-width: 1px;
 }
+
+#watchedToggle {
+  margin: 2px;
+}
