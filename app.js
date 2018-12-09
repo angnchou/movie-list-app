@@ -1,5 +1,5 @@
 // import React from "../node_modules/react/dist/react.js";
-import List from "./List.js";
+import Movielist from "./movieList.js";
 import Search from "./search.js";
 import Add from "./add.js";
 
@@ -10,8 +10,14 @@ class App extends React.Component {
       searchValue: "",
       searchQuery: "", //filter with the value you search with
       movieItems: [],
+
+      //the list view the user selects (watched/to watch); use this to filter movieItems and pass to movieList
+      //store the conditional to use for rendering in the state/props
+      watchedList: false,
+
       addInputValue: "" //can be local state
     };
+    this.toggleWatch = this.toggleWatch.bind(this);
   }
 
   handleInput(event) {
@@ -27,6 +33,7 @@ class App extends React.Component {
     event.preventDefault();
     const toAdd = { title: this.state.addInputValue, watchStatus: false };
     this.setState({
+      //copies old state first
       movieItems: [toAdd, ...this.state.movieItems],
       addInputValue: ""
     });
@@ -37,11 +44,24 @@ class App extends React.Component {
   }
 
   searchItems() {
+    //update searchItems to filter list for each view
     const query = this.state.searchQuery.toLowerCase();
     return this.state.movieItems.filter(movie => {
-      //filter original full list
-      return movie.title.toLowerCase().includes(query);
+      return (
+        movie.watchStatus === this.state.watchedList &&
+        movie.title.toLowerCase().includes(query)
+      );
     });
+  }
+
+  toggleWatch(movieObj) {
+    const newMovieItems = [...this.state.movieItems]; // to change state, create new movieItems list , new object then setState by copying title and watchStatus from current movieList
+    const index = newMovieItems.indexOf(movieObj);
+    newMovieItems[index] = {
+      title: movieObj.title,
+      watchStatus: !movieObj.watchStatus
+    };
+    this.setState({ movieItems: newMovieItems });
   }
 
   //toggle watch status
@@ -54,8 +74,23 @@ class App extends React.Component {
     return (
       <div className="box">
         <h1>{"MovieList!"}</h1>
-        <button>{"Watched"}</button>
-        <button>{"To watch"}</button>
+        <button
+          className="btn-default"
+          onClick={() => {
+            this.setState({ watchedList: true });
+          }}
+        >
+          {"Watched"}
+        </button>
+        <button
+          className="btn-default"
+          onClick={() => {
+            this.setState({ watchedList: false });
+          }}
+        >
+          {"To watch"}
+        </button>
+        <br />
         <div>
           <Add
             handleAdd={this.handleAdd.bind(this)}
@@ -72,7 +107,11 @@ class App extends React.Component {
           />
         </div>
         <div>
-          <List list={this.searchItems()} query={this.state.searchQuery} />
+          <Movielist
+            list={this.searchItems()}
+            query={this.state.searchQuery}
+            toggleWatch={this.toggleWatch}
+          />
         </div>
       </div>
     );
@@ -80,4 +119,6 @@ class App extends React.Component {
 }
 
 export default App;
-//render elements that match search query
+
+//data fetcher: a function that gets data from state
+//do not pass to the children,  pass the data the fetcher returns as props to children

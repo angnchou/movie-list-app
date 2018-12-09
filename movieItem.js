@@ -5,15 +5,23 @@ const MovieItem = props => {
   return (
     <li className="list">
       {props.movieItem.title}
-      <button>{"Watched"}</button>
+      <button
+        className="btn-default"
+        onClick={event => props.toggleWatch(props.movieItem)}
+      >
+        {props.movieItem.watchStatus ? "Watched" : "Not watched"}
+      </button>
     </li>
   );
 };
-// props has movieItem thing,
+
+//update button text to say "watched" or "not watched"
+// props has movieItem object that has title and watchStatus
 MovieItem.propTypes = {
   movieItem: React.PropTypes.shape({
     title: React.PropTypes.string.isRequired,
     watchStatus: React.PropTypes.bool.isRequired
-  }).isRequired
+  }).isRequired,
+  toggleWatch: React.PropTypes.func.isRequired
 };
 export default MovieItem;
