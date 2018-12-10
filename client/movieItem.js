@@ -55,14 +55,12 @@ class MovieItem extends React.Component {
       method: "GET",
       url: movieUrl,
       success: data => {
-        console.log(data);
         const id = data.results[0].id;
         const movieImageUrl = `https://api.themoviedb.org/3/movie/${id}?api_key=${api}`;
         $.ajax({
           method: "GET",
           url: movieImageUrl,
           success: dataSecond => {
-            console.log(dataSecond);
             this.setState({
               release_date: dataSecond.release_date,
               overview: dataSecond.overview,
