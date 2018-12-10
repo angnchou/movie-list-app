@@ -2,6 +2,8 @@
 import Movielist from "./movieList.js";
 import Search from "./search.js";
 import Add from "./add.js";
+// import $ from "jquery";
+// import API from "./config.js";
 
 class App extends React.Component {
   constructor(props) {
@@ -11,11 +13,12 @@ class App extends React.Component {
       searchQuery: "", //filter with the value you search with
       addInputValue: "", //can be local state
       movieItems: [],
+      searchMovie: [],
 
       //the list view the user selects (watched/to watch); use this to filter movieItems and pass to movieList
       //store the conditional to use for rendering in the state/props
       watchedList: false,
-      //the state for the panel
+      //watchedList the state for the panel
       selectedMovie: null
     };
 
@@ -29,7 +32,22 @@ class App extends React.Component {
 
   handleSearch(event) {
     event.preventDefault();
-    this.setState({ searchQuery: this.state.searchValue, searchValue: "" });
+    var api = "be7fec3c03075b25e0f215a32a299657";
+    var movieUrl = `https://api.themoviedb.org/3/search/movie?api_key=${api}&query=${
+      this.state.searchValue
+    }`;
+    alert(movieUrl);
+
+    $.ajax({
+      method: "GET",
+      url: movieUrl,
+      success: data => {
+        this.setState({
+          searchMovie: data
+        });
+      }
+    });
+    // this.setState({ searchQuery: this.state.searchValue, searchValue: "" });
   }
 
   handleAdd(event) {
