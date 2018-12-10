@@ -9,15 +9,18 @@ class App extends React.Component {
     this.state = {
       searchValue: "",
       searchQuery: "", //filter with the value you search with
+      addInputValue: "", //can be local state
       movieItems: [],
 
       //the list view the user selects (watched/to watch); use this to filter movieItems and pass to movieList
       //store the conditional to use for rendering in the state/props
       watchedList: false,
-
-      addInputValue: "" //can be local state
+      //the state for the panel
+      selectedMovie: null
     };
+
     this.toggleWatch = this.toggleWatch.bind(this);
+    this.selectMovie = this.selectMovie.bind(this);
   }
 
   handleInput(event) {
@@ -70,6 +73,10 @@ class App extends React.Component {
   //a watchedList in state so "watched" button can render only these titles
   //on click the page only renders these titles
 
+  selectMovie(movieObj) {
+    this.setState({ selectedMovie: movieObj });
+  }
+
   render() {
     return (
       <div className="box">
@@ -111,6 +118,8 @@ class App extends React.Component {
             list={this.searchItems()}
             query={this.state.searchQuery}
             toggleWatch={this.toggleWatch}
+            selectMovie={this.selectMovie}
+            selectedMovie={this.state.selectedMovie}
           />
         </div>
       </div>
@@ -122,3 +131,13 @@ export default App;
 
 //data fetcher: a function that gets data from state
 //do not pass to the children,  pass the data the fetcher returns as props to children
+
+//level 4
+//add new state to render panel when movie selected
+//action changes state, state decides how the page renders
+//when changing between watch and to watch, reset selectedMovie to null
+//
+
+//create hardcode panel for now
+//fetch data from API
+//
