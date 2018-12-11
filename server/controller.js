@@ -1,3 +1,4 @@
+//hardcode data for all other requests
 const data = [
   {
     title: "movie 1",
@@ -19,10 +20,6 @@ module.exports = {
   movies: {
     get: (req, res) => {
       res.send(data);
-    },
-
-    post: (req, res) => {
-      res.send("Hello World");
     }
   }
 };

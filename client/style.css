@@ -24,6 +24,10 @@ li:last-child {
   border-bottom-width: 1px;
 }
 
-.btn-default {
-  background-color: white;
+.image {
+  align-content: flex-end;
+}
+
+.panel {
+  background-color: lightgrey;
 }

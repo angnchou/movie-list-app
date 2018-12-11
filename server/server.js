@@ -10,7 +10,10 @@ module.exports.app = app;
 const port = 3000;
 app.set("port", port);
 
-app.use("/api/movies");
+app.use(router);
+app.use((req, res) => {
+  res.send("Hello World");
+});
 
 app.listen(app.get("port"));
 console.log("Listening on ", port);

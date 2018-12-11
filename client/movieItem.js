@@ -7,6 +7,7 @@ class MovieItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      title: "",
       release_date: "",
       overview: "",
       image: "",
@@ -18,21 +19,25 @@ class MovieItem extends React.Component {
 
   getPanel() {
     return this.props.selectedMovie === this.props.movieItem ? (
-      <div>
+      <div className="panel">
         <div>
-          {"release date: "}
+          {<b>title: </b>}
+          {this.state.title}
+        </div>
+        <div>
+          {<b>release date: </b>}
           {this.state.release_date}
         </div>
         <div>
-          {"overview: "}
+          {<b>overview: </b>}
           {this.state.overview}
         </div>
         <div>
-          {"runtime: "}
+          {<b>runtime: </b>}
           {this.state.runtime}
           {"min"}
         </div>
-        <img src={this.state.image} />
+        <img className="image" src={this.state.image} />
 
         <button
           className="btn-default"
@@ -55,6 +60,8 @@ class MovieItem extends React.Component {
       method: "GET",
       url: movieUrl,
       success: data => {
+        console.log(data);
+        const title = data.results[0].title;
         const id = data.results[0].id;
         const movieImageUrl = `https://api.themoviedb.org/3/movie/${id}?api_key=${api}`;
         $.ajax({
@@ -62,6 +69,7 @@ class MovieItem extends React.Component {
           url: movieImageUrl,
           success: dataSecond => {
             this.setState({
+              title: title,
               release_date: dataSecond.release_date,
               overview: dataSecond.overview,
               runtime: dataSecond.runtime,
